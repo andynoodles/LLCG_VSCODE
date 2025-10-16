@@ -31,6 +31,14 @@
         }
       ]
     },
+    "keybindings": [
+      {
+        "command": "llcg.completeWithLLM",
+        "key": "ctrl+shift+l",
+        "mac": "cmd+shift+l",
+        "when": "editorTextFocus && editorHasSelection"
+      }
+    ],
     "configuration": {
       "title": "LLCG",
       "properties": {

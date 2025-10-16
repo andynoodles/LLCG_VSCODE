@@ -1,71 +1,167 @@
-# llcg README
+# LLCG - LLM Code Generator
 
-This is the README for your extension "llcg". After writing up a brief description, we recommend including the following sections.
+A Visual Studio Code extension that provides intelligent code completion powered by Large Language Models through Ollama.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
-
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+- **Smart Code Completion**: Select code or comments and get AI-powered completions
+- **Two-Step Generation**: Uses prompt reformulation for better code generation
+- **Inline Suggestions**: Completions appear as inline suggestions that you can accept with Tab
+- **Context Menu Integration**: Right-click on selected text to trigger completion
+- **Keyboard Shortcut**: Quick access via `Cmd+Shift+L` (Mac) or `Ctrl+Shift+L` (Windows/Linux)
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+- **Ollama**: This extension requires Ollama to be running locally or accessible via network
+- The default model is `Question_reformer_qwen:latest`
+- Ensure your Ollama server is accessible at the configured URL
 
-## Extension Settings
+## Installation
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+1. Clone or download this repository
+2. Install dependencies: `npm install`
+3. Compile the extension: `npm run compile`
+4. Press `F5` to launch the Extension Development Host
+5. Alternatively, package and install: `vsce package` then install the `.vsix` file
 
-For example:
+## Usage
 
-This extension contributes the following settings:
+### Method 1: Keyboard Shortcut
+1. Select the code or comment you want to complete
+2. Press `Cmd+Shift+L` (Mac) or `Ctrl+Shift+L` (Windows/Linux)
+3. Wait for the completion to generate
+4. Press `Tab` to accept the inline suggestion
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+### Method 2: Context Menu
+1. Select the code or comment you want to complete
+2. Right-click to open the context menu
+3. Click "Complete with LLM"
+4. Press `Tab` to accept the inline suggestion
+
+### Method 3: Command Palette
+1. Select the code or comment you want to complete
+2. Press `Cmd+Shift+P` (Mac) or `Ctrl+Shift+P` (Windows/Linux)
+3. Type "Complete with LLM" and press Enter
+4. Press `Tab` to accept the inline suggestion
+
+## Configuration
+
+The extension can be configured through VS Code settings:
+
+### `llcg.ollamaUrl`
+- **Type**: String
+- **Default**: `http://140.124.181.155:8080/api/generate`
+- **Description**: The URL of your Ollama API endpoint
+
+### `llcg.modelName`
+- **Type**: String
+- **Default**: `Question_reformer_qwen:latest`
+- **Description**: The name of the Ollama model to use for completion
+
+### Example Configuration
+
+Add to your `settings.json`:
+
+```json
+{
+  "llcg.ollamaUrl": "http://localhost:11434/api/generate",
+  "llcg.modelName": "codellama:latest"
+}
+```
+
+## How It Works
+
+The extension uses a two-step process for better code generation:
+
+1. **Prompt Reformulation**: Your selected text is sent to the LLM to create a well-formatted task description
+2. **Code Generation**: The reformulated prompt is used along with your original code to generate a completion
+
+This approach helps the LLM better understand your intent and generate more accurate code.
+
+## Examples
+
+### Example 1: Function Comment to Code
+
+Select this comment:
+```python
+# Calculate the factorial of a number using recursion
+```
+
+The extension will generate:
+```python
+# Calculate the factorial of a number using recursion
+def factorial(n):
+    if n == 0 or n == 1:
+        return 1
+    return n * factorial(n - 1)
+```
+
+### Example 2: Partial Function to Complete Implementation
+
+Select this partial code:
+```python
+def merge_sort(arr):
+    if len(arr) <= 1:
+        return arr
+```
+
+The extension will generate the complete merge sort implementation.
+
+## Keyboard Shortcuts
+
+| Command | Windows/Linux | macOS | Description |
+|---------|--------------|--------|-------------|
+| Complete with LLM | `Ctrl+Shift+L` | `Cmd+Shift+L` | Generate code completion for selected text |
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+- The extension requires text to be selected before triggering
+- Completion quality depends on the Ollama model used
+- Network latency may affect completion speed
+- Large completions may take longer to generate
+
+## Development
+
+### Setup
+```bash
+npm install
+npm run compile
+```
+
+### Watch Mode
+```bash
+npm run watch
+```
+
+### Testing
+```bash
+npm test
+```
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+### 0.0.1
 
-### 1.0.0
+Initial release of LLCG:
+- LLM-powered code completion
+- Two-step prompt reformulation
+- Inline completion suggestions
+- Context menu integration
+- Configurable Ollama endpoint and model
+- Keyboard shortcut support
 
-Initial release of ...
+## Contributing
 
-### 1.0.1
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-Fixed issue #.
+## License
 
-### 1.1.0
+[MIT License](LICENSE)
 
-Added features X, Y, and Z.
+## Credits
+
+Powered by [Ollama](https://ollama.ai/) for local LLM inference.
 
 ---
 
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+**Enjoy intelligent code completion with LLCG!**
